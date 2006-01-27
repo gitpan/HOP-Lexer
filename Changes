@@ -1,5 +1,8 @@
 Revision history for HOP-Lexer
 
+0.02    2006-01-26
+        Added "string_lexer" syntactic sugar.
+
 0.01    Date/time
         First version, released on an unsuspecting world.
 

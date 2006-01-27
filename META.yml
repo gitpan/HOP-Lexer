@@ -1,6 +1,6 @@
 ---
 name: HOP-Lexer
-version: 0.01
+version: 0.02
 author:
   - Curtis "Ovid" Poe <ovid@cpan.org>
 abstract: '"Higher Order Perl" Lexer'
@@ -11,6 +11,9 @@ requires:
 provides:
   HOP::Lexer:
     file: lib/HOP/Lexer.pm
-    version: 0.01
-generated_by: Module::Build version 0.2702
+    version: 0.02
+generated_by: Module::Build version 0.2704
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2
 MailingList: http://hop.perl.plover.com/~alias/list.cgi/2/

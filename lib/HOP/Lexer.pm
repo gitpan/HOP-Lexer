@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 use base 'Exporter';
-our @EXPORT_OK   = qw/ make_lexer /;
+our @EXPORT_OK   = qw/ make_lexer string_lexer /;
 our %EXPORT_TAGS = ( all => \@EXPORT_OK );
 
 use HOP::Stream 'node';
@@ -19,14 +19,11 @@ Version 0.01
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
- use HOP::Lexer 'make_lexer';
- my $text = 'x = 3 + 4';
- my @text = ($text);
- my $iter = sub { shift @text };
+ use HOP::Lexer 'string_lexer';
   
  my @input_tokens = (
      [ 'VAR',   qr/[[:alpha:]]+/    ],
@@ -35,7 +32,8 @@ our $VERSION = '0.01';
      [ 'SPACE', qr/\s*/, sub { () } ],
  );
   
- my $lexer = make_lexer( $iter, @input_tokens );
+ my $text  = 'x = 3 + 4';
+ my $lexer = string_lexer( $text, @input_tokens );
   
  my @tokens;
  while ( my $token = $lexer->() ) {
@@ -44,7 +42,7 @@ our $VERSION = '0.01';
 
 =head1 EXPORT
 
-Only one function, C<make_lexer>, is exported on demand.
+Two functions may be exported, C<make_lexer> and C<string_lexer>.
 
 =head1 FUNCTIONS
 
@@ -59,7 +57,9 @@ of lexed tokens. The output tokens are two element arrays:
  [ $label, $matched_text ]
 
 The iterator should be a subroutine reference that returns the next value
-merely by calling the subroutine with no arguments.
+merely by calling the subroutine with no arguments.  If you have a single
+block of text in a scalar that you want lexed, see the C<string_lexer>
+function.
 
 The input C<@tokens> array passed into C<make_lexer> is expected to be a list
 of array references with two mandatory items and one optional one:
@@ -138,7 +138,30 @@ Note that the order in which the input tokens are passed in might cause input
 to be lexed in different ways, thus the order is significant (C</\w+/> might
 slurp up numbers before C</\b\d+\b/> can read them).
 
+=head2 string_lexer
+
+ my $lexer = string_lexer( $string, @tokens );
+
+This function is identical to C<make_lexer>, but takes a string as the first
+argument.  This is merely syntactic sugar for the common case where we have
+our data in a string but don't want to create an iterator.  The following are
+equivalent.
+
+ my $lexer = string_lexer( $text, @input_tokens );
+
+Versus:
+
+ my @text  = ($text);
+ my $iter  = sub { shift @text };
+ my $lexer = make_lexer( $iter, @input_tokens );
+ 
 =cut
+
+sub string_lexer {
+    my $text = shift;
+    my @text = $text;
+    return make_lexer( sub { shift @text }, @_ );
+}
 
 sub make_lexer {
     my $lexer = shift;
@@ -198,6 +221,11 @@ C<bug-hop-lexer@rt.cpan.org>, or through the web interface at
 L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=HOP-Lexer>.
 I will be notified, and then you'll automatically be notified of progress on
 your bug as I make changes.
+
+=head1 FURTHER READING
+
+See L<http://www.perl.com/pub/a/2006/01/05/parsing.html> for a detailed
+article about using this module, along with a comprehensive example.
 
 =head1 ACKNOWLEDGEMENTS
 
@@ -305,6 +333,5 @@ any other damages or loss in any way connected with the Software.
 =back
 
 =cut
-
 
 1; # End of HOP::Lexer
