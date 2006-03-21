@@ -15,11 +15,11 @@ HOP::Lexer - "Higher Order Perl" Lexer
 
 =head1 VERSION
 
-Version 0.01
+Version 0.03
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 =head1 SYNOPSIS
 
@@ -210,6 +210,27 @@ sub _tokens {
     };
 }
 
+=head1 CAVEATS
+
+The following caveats (or pitfalls, if you prefer), should be kept in mind
+while lexing data.
+
+=over 4
+
+=item * Unlexed data
+
+The tokens returned by the lexer are array references.  If any data cannot be
+lexed, it will be returned as a string, unchanged.
+
+=item * Capturing parens
+
+Internally, L<Hop::Lexer> uses capturing parentheses to extract the data from
+the provided regular expressions.  If you need to group data in regular
+expressions, use the non-capturing parentheses C<(?:...)>.  Otherwise, your
+code will break.
+
+=back
+
 =head1 AUTHOR
 
 Mark Jason Dominus.  Maintained by Curtis "Ovid" Poe, C<< <ovid@cpan.org> >>
@@ -226,6 +247,8 @@ your bug as I make changes.
 
 See L<http://www.perl.com/pub/a/2006/01/05/parsing.html> for a detailed
 article about using this module, along with a comprehensive example.
+
+This has now been included in the distribution as L<HOP::Lexer::Article>.
 
 =head1 ACKNOWLEDGEMENTS
 

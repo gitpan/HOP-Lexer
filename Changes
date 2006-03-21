@@ -1,5 +1,9 @@
 Revision history for HOP-Lexer
 
+0.03    2006-03-21
+        Added HOP::Lexer::Article.  Reproduced by permission of O'Reilly.
+        Minor doc updates.
+
 0.02    2006-01-26
         Added "string_lexer" syntactic sugar.
 
