@@ -1,5 +1,9 @@
 Revision history for HOP-Lexer
 
+0.031   2006-04-05
+        Renamed "CAVEATS" to "DEBUGGING" and added a note on precedence to
+        that section.
+
 0.03    2006-03-21
         Added HOP::Lexer::Article.  Reproduced by permission of O'Reilly.
         Minor doc updates.

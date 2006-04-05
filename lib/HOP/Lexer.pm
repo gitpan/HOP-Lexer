@@ -19,7 +19,7 @@ Version 0.03
 
 =cut
 
-our $VERSION = '0.03';
+our $VERSION = '0.031';
 
 =head1 SYNOPSIS
 
@@ -210,7 +210,7 @@ sub _tokens {
     };
 }
 
-=head1 CAVEATS
+=head1 DEBUGGING
 
 The following caveats (or pitfalls, if you prefer), should be kept in mind
 while lexing data.
@@ -228,6 +228,25 @@ Internally, L<Hop::Lexer> uses capturing parentheses to extract the data from
 the provided regular expressions.  If you need to group data in regular
 expressions, use the non-capturing parentheses C<(?:...)>.  Otherwise, your
 code will break.
+
+=item * Precedence
+
+It's important to note that the order of the described tokens is important.
+If you have keywords such as "while", "if", "unless", and so on, and any text
+which matches C<qr/[[:word:]]+/> is considered a variable, the following fails:
+
+  my @input_tokens = (
+      [ 'VAR',     qr/[[:word:]]+/         ],
+      [ 'KEYWORD', qr/(?:while|if|unless)/ ],
+  );
+
+This is because the potential keywords will be matched as C<VAR>.  To deal
+with this, place the higher precedence tokens first:
+
+  my @input_tokens = (
+      [ 'KEYWORD', qr/(?:while|if|unless)/ ],
+      [ 'VAR',     qr/[[:word:]]+/         ],
+  );
 
 =back
 
