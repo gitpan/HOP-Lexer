@@ -140,7 +140,7 @@ When lexed, we might get a series of tokens like the following:
    [ OP  => '=' ],
    [ OP  => '(' ],
    [ INT => '3' ],
-   [ VAR => '+' ],
+   [ OP  => '+' ],
    [ INT => '2' ],
    [ OP  => ')' ],
    [ OP  => '/' ],

@@ -15,11 +15,11 @@ HOP::Lexer - "Higher Order Perl" Lexer
 
 =head1 VERSION
 
-Version 0.03
+Version 0.032
 
 =cut
 
-our $VERSION = '0.031';
+our $VERSION = '0.032';
 
 =head1 SYNOPSIS
 

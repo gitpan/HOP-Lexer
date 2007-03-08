@@ -6,6 +6,7 @@ README
 lib/HOP/Lexer.pm
 lib/HOP/Lexer/Article.pod
 t/00-load.t
+t/10-lexer.t
 t/pod-coverage.t
 t/pod.t
 Makefile.PL
